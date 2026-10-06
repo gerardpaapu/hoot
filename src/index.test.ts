@@ -1,10 +1,10 @@
 import { vi, describe, expect, test } from "vitest";
-import { skipRoot, TokenType } from "./index.ts";
+import { readRoot, TokenType } from "./index.ts";
 
 describe("lexing some strings", () => {
   test("reads an ask", () => {
     const tokens = [] as any[];
-    let end = skipRoot('ask("poos and wees?")', 0, tokens);
+    let end = readRoot('ask("poos and wees?")', 0, tokens);
     expect(end).toBeGreaterThan(0);
     expect(tokens).toStrictEqual([
       {
@@ -27,7 +27,7 @@ describe("lexing some strings", () => {
 
   test("reads an search", () => {
     const tokens = [] as any[];
-    let end = skipRoot('search("poos and wees?")', 0, tokens);
+    let end = readRoot('search("poos and wees?")', 0, tokens);
     expect(end).toBeGreaterThan(0);
     expect(tokens).toStrictEqual([
       {
@@ -51,7 +51,7 @@ describe("lexing some strings", () => {
   test('reads "list"', () => {
     const tokens = [] as any[];
 
-    let end = skipRoot("list", 0, tokens);
+    let end = readRoot("list", 0, tokens);
     expect(end).toBeGreaterThan(0);
     expect(tokens).toStrictEqual([
       {

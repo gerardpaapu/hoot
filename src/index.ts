@@ -77,7 +77,7 @@ function skipWhitespace(src: string, start: number) {
   return LexingError.EndOfInput;
 }
 
-function skipQuotedString(src: string, start: number, tokens: Token[]) {
+function readQuotedString(src: string, start: number, tokens: Token[]) {
   let end = start;
   if (src.charAt(end) != '"') {
     return -1;
@@ -92,7 +92,7 @@ function skipQuotedString(src: string, start: number, tokens: Token[]) {
   return end;
 }
 
-export function skipRoot(src: string, start: number, tokens: Token[]) {
+export function readRoot(src: string, start: number, tokens: Token[]) {
   let i = skipWhitespace(src, start);
 
   if (src.startsWith("list", i)) {
@@ -104,7 +104,7 @@ export function skipRoot(src: string, start: number, tokens: Token[]) {
   if (src.startsWith("ask(", i)) {
     i += "ask(".length;
     tokens.push({ type: TokenType.AskOpen, start, end: i });
-    i = skipQuotedString(src, i, tokens);
+    i = readQuotedString(src, i, tokens);
     if (i < 0) {
       return i;
     }
@@ -120,7 +120,7 @@ export function skipRoot(src: string, start: number, tokens: Token[]) {
   if (src.startsWith("search(", i)) {
     i += "search(".length;
     tokens.push({ type: TokenType.SearchOpen, start, end: i });
-    i = skipQuotedString(src, i, tokens);
+    i = readQuotedString(src, i, tokens);
     if (i < 0) {
       return i;
     }
